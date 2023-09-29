@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Contatos Binario</title>
+</head>
+
+<body>
+    <h1>Lista de Contatos: </h1>
+    <form>
+        <label for="nome"><strong>Nome:</strong></label>
+        <input type="text" id="nome">
+        <br>
+        <label for="email"><strong>Email:</strong></label>
+        <input type="email" id="email">
+        <br>
+        <label for="telefone"><strong>Telefone:</strong></label>
+        <input type="tel" id="telefone">
+        <br>
+        <input type="submit" value="Salvar">
+    </form>
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const nome = document.querySelector('#nome').value;
+            const email = document.querySelector('#email').value;
+            const telefone = document.querySelector('#telefone').value;
+            const contato = {
+                nome,
+                email,
+                telefone,
+            };
+            const dadosBinarios = JSON.stringify(contato);
+            const blob = new Blob([dadosBinarios], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'contatos.bin';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+
+</html>
